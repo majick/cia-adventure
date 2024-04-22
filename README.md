@@ -6,4 +6,14 @@ This is a quick-n-dirty forward port of an "interactive fiction" game (that is, 
 
 Back in the extremely early 80s, probably 1980 or 1981, I had a cassette of "CIA Adventure" for the TRS-80 Model I — at the time we bought the computer, the thing was just called "a TRS-80", and the "Model I" thing was a retronym when other models came into existence — and since I was a little kid I had no idea how the hell to play this game. I mean, I'd played text adventures before but this game stumped me. I wasn't willing to cheat and read the program's code, so I just never finished it.
 
+## What's here?
+
+The ported source is in: `cia-port.bas`.  As is customary for the modern era, the `.bas` file is source code. 
+
+In `orig/ciaadvn8.txt` is the source from which the port was made. It was detokenized from `orig/variants/tokenized/ciaadvn8.bas`
+
+In `orig/variants/tokenized` are the various original versions of the CIA Adventure game, as tokenized BASIC files for Level II BASIC. As is customary for the platform, ".bas" files are tokenized BASIC; that's because these are actually `/BAS` files as represented on the TRSDOS filesystem.
+
+In `orig/variants/src` are detokenized ("source") versions of the same. They were detokenized using [trs80-tool](https://www.my-trs-80.com/tool/).
+
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)

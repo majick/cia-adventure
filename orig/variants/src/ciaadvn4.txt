@@ -1,0 +1,272 @@
+1 REM  Translated from TRS-80 version on CPMNET BBS
+2 REM  Pete Wohlmut 10-3-82
+10 CL$=CHR$(26):PRINT CL$;::GOTO 40
+20 Z9=0:FOR R=1 TO 50:IF V1$=N$(R) AND (N(R)=LO OR N(R)=-1) THEN Z9=1:RETURN
+30 NEXT:PRINT"I don't see that here.":Z9=2:RETURN
+40 CLS:PRINT:PRINT "        C.I.A  ADVENTURE"
+41 CLEAR 1000
+50 DIM N1$(50),N$(50),N(50),V$(18),LO(30,4),LO$(30):FL=1:DR=0:DG=-1:T=0:EL=0:BU=0:DO=0:CA=0:BA=0:TE=0:GL=0
+60 PA=0:RO=0:FOR R=1 TO 5:R1=INT(9*RND(9)):CO$=CO$+STR$(R1):NEXT:LO=1
+65 A9$=">":FOR I=1 TO 62:A9$=A9$+"-":NEXT I:A9$=A9$+"<"
+70 R=LEN(CO$):CO$=RIGHT$(CO$,R-1)
+80 FOR R=1 TO 50:READ N1$(R),N$(R),N(R):NEXT
+90 FOR R=1 TO 30:READ LO$(R),LO(R,1),LO(R,2),LO(R,3),LO(R,4):NEXT
+100 FOR R=1 TO 18:READ V$(R):NEXT
+110 REM
+120 PRINT"We are ";LO$(LO);"."
+130 FOR R=1 TO 46:IF N(R)=LO THEN PRINT"I can see ";N1$(R);"."
+140 NEXT:B=0:FOR R=1 TO 4:IF LO(LO,R)>0 THEN B=1
+150 NEXT:IF B=0 THEN 200
+160 PRINT"We could easily go: ";:IF LO(LO,1)>0 THEN PRINT"NORTH  ";
+170 IF LO(LO,2)>0 THEN PRINT"SOUTH  ";
+180 IF LO(LO,3)>0 THEN PRINT"EAST  ";
+190 IF LO(LO,4)>0 THEN PRINT"WEST  ";
+200 PRINT:PRINT A9$
+210 T=T+1:IF DG>0 THEN DG=DG-1
+220 IF T=1 THEN INPUT"Enter your name, partner";NA$
+225 Q9$=NA$:GOSUB 4600:GOSUB 3000:NA$=Q9$
+230 GOTO 1760
+240 N=0:FOR R=1 TO 46:IF N(R)=-1 THEN N=N+1
+250 NEXT
+260 PRINT:INPUT"What do you think we should do";A$
+265 Q9$=A$:GOSUB 4500:A$=Q9$
+270 GOSUB 1890:V$=LEFT$(A$,3):GOSUB 1950:FOR R=1 TO 18:IF V$=V$(R) THEN 300
+275 NEXT
+280 IF V$="ORD" THEN 2210
+290 PRINT"I don't know how to do that.":GOTO 260
+300 IF V$="QUI" THEN 1650
+310 V=R:FOR R=1 TO LEN(A$):IF MID$(A$,R,1)=" " THEN 360
+315 NEXT
+320 IF V$="LOO" THEN 110
+330 IF V$="BON" THEN 1670
+340 IF V$="INV" THEN 1690
+350 PRINT"Please use two word commands so I can understand you.":GOTO 260
+360 V1$=MID$(A$,R+1,3):FOR R=1 TO 49:IF V1$=N$(R) THEN 390
+365 NEXT
+370 IF V1$="NOR" OR V1$="SOU" OR V1$="EAS" OR V1$="WES" THEN 390
+380 PRINT"I don't know what you are talking about.":GOTO 260
+390 ON V GOTO 400,530,620,680,800,840,1040,1140,1300,1320,1360,1450,1490,1540,1600,1650,1670,1690
+400 IF V1$="NOR" AND LO(LO,1)>0 THEN LO=LO(LO,1):GOTO 110
+410 IF V1$="SOU" AND LO(LO,2)>0 THEN LO=LO(LO,2):GOTO 110
+420 IF V1$="EAS" AND LO(LO,3)>0 THEN LO=LO(LO,3):GOTO 110
+430 IF V1$="WES" AND LO(LO,4)>0 THEN LO=LO(LO,4):GOTO 110
+440 IF V1$="NOR" OR V1$="SOU" OR V1$="EAS" OR V1$="WES" THEN 520
+450 GOSUB 20:IF Z9=2 THEN 210
+460 IF R=8 THEN LO=5:GOTO 110
+470 IF R=37 AND RO=1 AND LO=20 THEN LO=21:GOTO 110
+480 IF R=10 THEN LO=11:GOTO 110
+490 IF R=14 THEN LO=13:GOTO 110
+500 IF R=33 THEN LO=3:GOTO 110
+510 IF R=34 AND DO=1 THEN LO=9:GOTO 110
+520 PRINT"I can't go that way at the moment.":GOTO 210
+530 GOSUB 20:IF Z9=2 THEN 210
+540 IF R=2 OR R=3 OR R=4 OR R=6 OR R=15 OR R=16 OR R=20 OR R=21 OR R=22 OR R=23 OR R=25 OR R=26 OR R=27 OR R=28 OR R=30 OR R=31 OR R=37 OR R=39 OR R=40 OR R=42 OR R=44 OR R=45 OR R=46 THEN 560
+550 PRINT"I can't carry that!":GOTO 210
+560 IF N(R)=-1 THEN PRINT"I already have it.":GOTO 210
+570 IF N>=5 THEN PRINT"I can't carry any more.":GOTO 210
+580 PRINT"O.K.":N(R)=-1
+590 IF V1$="PAI" AND PA=0 THEN PRINT"Something fell from the frame!":N(31)=LO:PA=1
+600 IF V1$="TEL" THEN TE=0
+610 GOTO 210
+620 FOR R=1 TO 46:IF V1$=N$(R) AND N(R)=-1 THEN 640
+625 NEXT
+630 PRINT"I don't seem to be carrying it.":GOTO 210
+640 IF R=30 THEN PRINT"I dropped the cup but it broke into small pieces.":PRINT"The coffee soaked into the ground.":N(30)=0:DR=0:GOTO 210
+650 IF R=45 THEN GL=0
+660 IF R=31 AND N(30)=-1 THEN PRINT"O.K. I dropped it.":PRINT"But it fell in the coffee!":N(31)=0:DR=1:GOTO 210
+670 PRINT"O.K. I dropped it.":N(R)=LO:GOTO 210
+680 IF V1$="BUT" AND LO=3 AND DO=0 THEN PRINT"The doors open with a whoosh!":DO=1:GOTO 210
+690 IF N(46)=-1 AND V1$="BUT" THEN PRINT"I push the button on the box and":GOTO 770
+700 GOSUB 20
+710 IF Z9=2 THEN 210
+720 IF R=17 AND GL<>1 THEN PRINT"There's electricity coursing through the square!":PRINT"I'm being electrocuted!":GOTO 2330
+730 IF R=35 AND BU=0 THEN PRINT"The button on the wall goes in .....":PRINT"CLICK! Something seems different now.":BU=1:GOTO 210
+740 IF R=47 AND FL<>1 THEN LO(9,1)=3:FL=1:GOTO 790
+750 IF R=48 AND FL<>2 THEN LO(9,1)=8:FL=2:GOTO 790
+760 IF R=49 AND FL<>3 THEN LO(9,1)=10:FL=3:GOTO 790
+770 IF N(46)=-1 AND (LO=6 OR LO=29)THEN PRINT"There is a blinding flash....":FOR R=1 TO 3000:NEXT:LO=1:FL=1:LO(9,1)=3:GOTO 110
+780 PRINT"Nothing happens":GOTO 210
+790 PRINT"The doors close and I feel as if the room is moving.":PRINT"Suddenly the doors open again.":FOR R=1 TO 5000:NEXT:GOTO 110
+800 GOSUB 20:IF Z9=2 THEN 210
+810 IF R=18 AND GL<>1 THEN PRINT"The lever has electricity coursing through it!":PRINT"I'm being electrocuted!":GOTO 2330
+820 IF R=18 AND EL=0 THEN PRINT"The lever goes all the way up and clicks.":PRINT"Something seems different now.":EL=1:GOTO 210
+830 PRINT "Nothing happens.":GOTO 210
+840 REM
+850 IF V1$="DRA" AND LO=5 THEN PRINT"It looks fragile.":GOTO 210
+860 GOSUB 20:IF Z9=2 THEN 210
+870 IF R=1 AND BA<>1 THEN PRINT"There's no power for it.":GOTO 210
+880 IF R=1 AND TE<>1 THEN PRINT"There's no T.V. to watch on.":GOTO 210
+890 IF R=6 THEN PRINT"It looks heavy.":GOTO 210
+900 IF R=7 THEN PRINT"It's locked.":GOTO 210
+910 IF R=13 THEN PRINT"It's a very strong bag.":GOTO 210
+920 IF R=19 THEN PRINT"I can see a locked drawer in it.":GOTO 210
+930 IF R=22 OR R=27 THEN PRINT"There's writing on it.":GOTO 210
+940 IF R=34 AND DO=1 THEN PRINT"The doors are open.":GOTO 210
+950 IF R=24 THEN PRINT"I can see a gleaming stone in it.":GOTO 210
+960 IF R=9 THEN PRINT"There is a small slit near the door.":GOTO 210
+970 IF R=34 THEN PRINT"There's a button near the doors.":GOTO 210
+980 IF R=41 AND BU=1 THEN PRINT"The screen is dark.":GOTO 210
+990 IF R=41 THEN PRINT"I see a metal pit thousands of feet deep on one monitor.":PRINT"On the other side of the pit, I see a large hook.":GOTO 210
+1000 IF R=43 AND BU=1 THEN PRINT"The screen is dark.":GOTO 210
+1010 IF R=43 THEN PRINT"I see a room with a case on a pedestal in it.":GOTO 210
+1020 IF R=44 THEN PRINT"I see a picture of a grinning jackal.":GOTO 210
+1030 PRINT"I see nothing of interest.":GOTO 210
+1040 GOSUB 20:IF Z9=2 THEN 210
+1050 IF R<>3 AND R<>2 AND R<>4 AND R<>28 THEN PRINT"I can't insert that!":GOTO 210
+1060 INPUT"Tell me, in one word, into what";A3$:A3$=LEFT$(A3$,3)
+1070 R1=R:V1$=A3$:GOSUB 20:IF Z9=2 THEN 210
+1080 IF R1=3 AND R=1 THEN PRINT"O.K.":BA=1:N(3)=0:BA=1:GOTO 210
+1090 IF R1=4 AND R=50 AND DG<=0 THEN PRINT"The guard won't let me!":GOTO 210
+1100 IF R1=2 AND R=1 THEN PRINT"O.K. The tape is in the recorder.":N(2)=0:TA=1:GOTO 210
+1110 IF R1=4 AND R=50 THEN PRINT"POP! A section of the wall opens.....":PRINT"revealing something very interesting.":N(4)=0:N(5)=LO:GOTO 210
+1120 IF R1=28 AND R=29 THEN PRINT"POP! A cup of coffee comes out of the machine.":N(28)=0:N(30)=LO:GOTO 210
+1130 PRINT"Nothing happened.":GOTO 210
+1140 REM
+1150 IF V1$="DRA" AND LO=5 AND N(23)=0 THEN PRINT"It's stuck.":GOTO 210
+1160 GOSUB 20:IF Z9=2 THEN 210
+1170 IF R=7 OR R=9 OR R=13 OR R=15 OR R=23 OR R=32 OR R=5 THEN 1190
+1180 PRINT"I can't open that!":GOTO 210
+1190 IF R=7 AND N(16)=-1 THEN PRINT"O.K. I opened the door.":N(7)=0:N(8)=4:GOTO 210
+1200 IF R=9 THEN PRINT"I can't. It doesn't work.":GOTO 210
+1210 IF R=13 AND N(16)=-1 THEN PRINT"O.K. The closet is opened.":N(13)=0:N(14)=14:GOTO 210
+1220 IF R=15 THEN PRINT"I can't. It's too strong.":GOTO 210
+1230 IF R=23 THEN PRINT"It's stuck.":GOTO 210
+1240 IF R=32 AND N(28)=0 AND N(4)=0 AND SC=1 THEN PRINT "I open the sculpture.":PRINT"Something falls out.":N(28)=LO:N(4)=LO:GOTO 210
+1250 IF R<>5 THEN 1290
+1260 INPUT"What's the combination";C$
+1270 IF C$=CO$ THEN PRINT"The door is slowly opening.":N(5)=0:N(9)=0:N(10)=10:GOTO 210
+1280 PRINT"You must have the wrong combination or you are not":PRINT"saying it right.":GOTO 210
+1290 PRINT"I can't do that......YET!":GOTO 210
+1300 IF V1$="GLO" AND N(45)=-1 THEN PRINT"O.K. I'm now wearing the gloves.":GL=1:GOTO 210
+1310 PRINT"I can't wear that!":GOTO 210
+1320 IF V1$<>"SIG" AND V1$<>"NOT" THEN PRINT"I can't read that.":GOTO 210
+1330 GOSUB 20:IF Z9=2 THEN 210
+1340 IF R=22 THEN PRINT"It says:":PRINT NA$;",":PRINT"  We have discovered one of CHAOS' secret words.":PRINT"It is: BOND-007-. To be used in a -TASTEFUL- situation.":GOTO 210
+1350 IF R=27 THEN PRINT"It says: Watch out! DANGEROUS!":GOTO 210
+1360 IF V1$<>"REC" THEN PRINT"I can't start that.":GOTO 210
+1370 GOSUB 20:IF Z9=2 THEN 210
+1380 IF BA<>1 OR TE<>1 OR TA<>1 THEN 1440
+1390 PRINT"The recorder starts up and presents a short message:"
+1400 PRINT NA$;","
+1410 PRINT"We have uncovered a number that may help you."
+1420 PRINT"That number is:";CO$;". Please watch out for hidden traps."
+1430 PRINT"Also, there is something hidden in the sculpture.":SC=1:GOTO 210
+1440 PRINT"Nothing happened.":GOTO 210
+1450 IF V1$<>"DRA" THEN PRINT"I'm trying to break it, but I can't.":GOTO 210
+1460 IF N(6)<>-1 THEN PRINT"I can't do that yet.":GOTO 210
+1470 IF LO=5 THEN PRINT"It's hard, but I got it. Two things fell out.":N(3)=LO:N(22)=LO:N(23)=LO:GOTO 210
+1480 PRINT"Nothing happens.":GOTO 210
+1490 GOSUB 20:IF Z9=2 THEN 210
+1500 IF R<>15 AND R<>24 THEN PRINT"I'm trying. It doesn't work.":GOTO 210
+1510 IF N(25)<>-1 THEN PRINT"I can't do that yet.":GOTO 210
+1520 IF R=15 THEN PRINT"RIP! The bag goes to pieces, and something falls out!":N(15)=0:N(2)=LO:GOTO 210
+1530 IF R=24 THEN PRINT"I cut the case and reach in to pull something out.":N(26)=-1:GOTO 210
+1540 IF V1$<>"ROP" THEN PRINT"I can't throw that.":GOTO 210
+1550 IF N(37)<>-1 THEN PRINT"I can't do that yet.":GOTO 210
+1560 INPUT"Tell me, in one word, at what";A3$:A3$=LEFT$(A3$,3)
+1570 IF A3$<>"HOO" THEN PRINT"O.K. I threw it.":N(37)=LO:GOTO 210
+1580 IF LO<>20 THEN PRINT"I can't do that yet.":GOTO 210
+1590 PRINT"I threw the rope and it snagged on the hook.":RO=1:N(37)=LO:GOTO 210
+1600 IF V1$<>"TEL" THEN PRINT"I can't connect that.":GOTO 210
+1610 IF N(40)<>LO THEN PRINT"I don't see the television here.":GOTO 210
+1620 IF TE=1 THEN PRINT"I did that already.":GOTO 210
+1630 IF LO<>2 THEN PRINT"I can't do that....YET!":GOTO 210
+1640 PRINT"O.K. The T.V. is connected.":TE=1:GOTO 210
+1650 PRINT"WHAT? YOU WOULD LEAVE ME HERE TO DIE ALONE?"
+1660 PRINT"JUST FOR THAT, I'M GOING TO DESTROY THE GAME.":PRINT:PRINT:PRINT:PRINT"BOOOOOOOOOOOOM!":FOR R=1 TO 5000:NEXT:GOTO 2370
+1670 IF LO=14 THEN PRINT"WHOOPS! A trap door opened underneath me and":PRINT"I find myself falling":FOR R=1 TO 4000:NEXT:LO=17:GOTO 110
+1680 PRINT"Nothing happened.":GOTO 210
+1690 Z8=0:PRINT"We are presently carrying:":FOR R=1 TO 46
+1700 IF N(R)<>-1 THEN 1730
+1705 Q9$=N1$(R):GOSUB 3000:REM 1ST CHAR TO UPPER CASE
+1710 PRINT Q9$;:IF R=45 AND GL=1 THEN PRINT". (Which I'm wearing).":GOTO 1720
+1715 PRINT" "
+1720 Z8=1
+1730 NEXT
+1740 IF Z8=0 THEN PRINT"Nothing."
+1750 GOTO 210
+1760 IF LO=3 AND N(39)=-1 THEN PRINT"The door man looks at my badge and then throws me out.":FOR R=1 TO 5000:NEXT:LO=1:GOTO 110
+1770 IF LO=10 AND N(42)<>-1 THEN PRINT"The guard looks at me suspiciously, then throws me back.":FOR R=1 TO 4000:NEXT:LO=9:GOTO 110
+1780 IF LO=6 AND BU<>1 THEN PRINT"Sirens go off all around me!":PRINT"Guards run in and shoot me to death!":GOTO 2330
+1790 IF LO=11 AND EL<>1 THEN PRINT"The floor is wired with electricity!":PRINT"I'm being electrocuted!":GOTO 2330
+1800 IF LO=10 AND N(30)=-1 AND DR=1 THEN PRINT"The guard takes my coffee":PRINT"and falls asleep right away.":DG=5+INT(10*RND(10)):N(11)=0:N(12)=10:DR=0:N(30)=0:GOTO 240
+1810 IF DG=0 THEN PRINT"I hear a noise like someone is yawning.":N(11)=10:N(12)=0:GU=-2:DG=-1:GOTO 240
+1820 IF LO=1 AND N(26)=-1 THEN PRINT"HURRAY! YOU'VE RECOVERED THE RUBY!":PRINT"YOU WIN!":GOTO 2350
+1830 IF T>375 THEN PRINT"I think they are on to me....I hear noises."
+1840 IF T=400 THEN PRINT"OH NO! THEY CAUGHT UP TO ME! HELP! THEY'RE PULLING OUT GUNS!":GOTO 2330
+1850 IF T=1 THEN PRINT"Writing on the wall says:":PRINT"If you want instructions, type: ORDERS PLEASE"
+1860 IF LO=6 AND LO(6,2)<>0 THEN PRINT"A secret door slams down behind me!":LO(6,2)=0:GOTO 240
+1870 IF LO=10 AND GU=-2 THEN PRINT"The guard draws his gun and shoots me":GOTO 2330
+1880 GOTO 240
+1890 IF A$="N" THEN A$="GO NORTH":RETURN
+1900 IF A$="S" THEN A$="GO SOUTH":RETURN
+1910 IF A$="E" THEN A$="GO EAST":RETURN
+1920 IF A$="W" THEN A$="GO WEST":RETURN
+1930 IF A$="I" THEN A$="INV":RETURN
+1940 RETURN
+1950 IF V$="WAL" OR V$="RUN" THEN V$="GO ":RETURN
+1960 IF V$="TAK" OR V$="CAR" THEN V$="GET":RETURN
+1970 IF V$="LEA" THEN V$="DRO":RETURN
+1980 IF V$="PRE" THEN V$="PUS":RETURN
+1990 IF V$="EXA" THEN V$="LOO":RETURN
+2000 IF V$="PUT" THEN V$="INS":RETURN
+2010 IF V$="UNL" THEN V$="OPE":RETURN
+2020 IF V$="PLA" THEN V$="STA":RETURN
+2030 IF V$="SMA" THEN V$="BRE":RETURN
+2040 IF V$="ATT" THEN V$="CON":RETURN
+2050 IF V$="LIS" THEN V$="INV":RETURN
+2060 RETURN
+2070 DATA a video cassette recorder,REC,2,a video tape,TAP,0,a large battery,BAT,0,a blank credit card,CAR,0,an electronic lock,LOC,0
+2071 DATA an elaborate paper weight,WEI,5,a locked wooden door,DOO,4,an open wooden door,DOO,0,a solid looking door,DOO,10
+2080 DATA an open door,DOO,0,an alert security guard,GUA,10,a sleeping security guard,GUA,0,a locked maintenance closet,CLO,14
+2081 DATA a maintenance closet,CLO,0,a plastic bag,BAG,13,an olde fashioned key,KEY,9,a small metal square on the wall,SQU,16
+2090 DATA a lever on the square,LEV,16,an old mahogany desk,DES,5,a broom,BRO,13,a dustpan,DUS,13,a spiral notebook,NOT,0
+2091 DATAa mahogany drawer,DRA,0,a glass case on a pedestal,CAS,6,a razor blade,BLA,27,a very large ruby,RUB,0,a sign on the square
+2100 DATA SIG,16,a quarter,QUA,0,a Coffee Machine,MAC,8,a cup of steaming hot coffee,CUP,0,a small capsule,CAP,0
+2101 DATAa large sculpture,SCU,3,a tall office building,BUI,1,a pair of sliding doors,DOO,3,a large button on the wall
+2110 DATA BUT,29,a panel of buttons numbered one through three,PAN,9,a strong nylon rope,ROP,17,a large hook with a rope hanging from it,HOO,21,a C.I.A. identification badge,BAD,-1,a portable television,TEL,7
+2120 DATA a bank of monitors,MON,7,a CHAOS I.D. card
+2130 DATA CAR,30,a bank of monitors,MON,19,a small painting,PAI,23,a pair of rubber gloves,GLO,13,a box with a button on it,BOX,24,ONE,ONE,9,TWO,TWO,9,THREE,THR,9,SLIT,SLI,10,on a busy street,0,0,0,0,in a visitor's room,0,0,3,0
+2140 DATA in the lobby of the building,1,0,4,2,in a dingy ante room,0,0,0,3
+2150 DATA in the Company President's office,0,0,0,4,in a small sound proofed cubicle,0,12,0,0,in a security office,0,0,8,0,in a small hallway,0,14,9,7,in a small room,3,0,0,0,in a short corridor,0,15,0,9,in a hallway made of metal,0,0,12,1
+0 
+2160 DATA in a small plain room,6,0,0,11
+2170 DATA in a maintenance closet,0,0,14,0,in a cafeteria,8,0,0,0,in a side corridor,10,0,16,0,in a power generator room,0,0,0,15,in a sub-basement below the chute,0,0,18,0,in the entrance to the secret complex,0,20,19,17
+2180 DATA in a secret monitoring room,0,0,0,18,on a ledge in front of a metal pit thousands of feet deep,18,0,0,0,on the other side of the pit,0,0,22,0,in a long corridor,0,25,23,21,in a large room,0,26,0,22,in a secret laboratory,0,0,25,0
+2190 DATA in a narrow cross corridor,22,0,0,24,in a cross examination room,23,28,0,0,in a small bathroom,0,0,28,0,in the office of the Chief of CHAOS,26,30,0,27,in the CHAOS control room,0,0,30,0,near the end of the complex,28,0,0,29
+2200 DATA "GO ",GET,DRO,PUS,PUL,LOO,INS,OPE,WEA,REA,STA,BRE,CUT,THR,CON,QUI,BON,INV
+2210 PRINT"Your mission, ";NA$;", is to recover a ruby that is being"
+2220 PRINT"used in top secret Government projects as a part in a"
+2230 PRINT"laser projector."
+2240 PRINT"  You will have a partner who is not too bright and needs"
+2250 PRINT"you to tell him what to do. Use two word commands like:"
+2260 PRINT:PRINT"              GET NOTEBOOK   GO WEST  LOOK DOOR"
+2270 PRINT:PRINT"Some commands use only one word. Example: INVENTORY"
+2280 PRINT"  If you want to see changes in your surroundings type: LOOK"
+2290 PRINT"The ruby has been captured by a secret spy ring known as"
+2300 PRINT"CHAOS. We suspect they are under cover somewhere in this"
+2310 PRINT"neighbourhood. GOOD LUCK!"
+2320 GOTO 240
+2330 FOR R=1 TO 5000:NEXT:PRINT"I'M DEAD!"
+2340 PRINT "You didn't win."
+2350 INPUT"Would you like to try again (Y/N)";Z$
+2360 IF Z$="Y" THEN RUN
+2370 END
+2999 REM
+3000 REM CONVERT FIRST CHARACTER IN Q9$ TO UPPER CASE
+3010 Q8$=LEFT$(Q9$,1):IF ASC(Q8$)<97 OR ASC(Q8$)>122 THEN RETURN
+3020 Q9$=CHR$(ASC(Q8$)-32)+RIGHT$(Q9$,LEN(Q9$)-1)
+3030 RETURN
+4500 REM CONVERT Q9$ TO UPPER CASE
+4510 FOR Q8=1 TO LEN(Q9$)
+4520 Q8$=MID$(Q9$,Q8,1):IF ASC(Q8$)<97 OR ASC(Q8$)>122 THEN 4540
+4530 Q9$=LEFT$(Q9$,Q8-1)+CHR$(ASC(Q8$)-32)+RIGHT$(Q9$,LEN(Q9$)-Q8)
+4540 NEXT Q8
+4550 RETURN
+4600 REM CONVERT Q9$ TO LOWER CASE
+4610 FOR Q8=1 TO LEN(Q9$)
+4620 Q8$=MID$(Q9$,Q8,1):IF ASC(Q8$)<65 OR ASC(Q8$)>90 THEN 4640
+4630 Q9$=LEFT$(Q9$,Q8-1)+CHR$(ASC(Q8$)+32)+RIGHT$(Q9$,LEN(Q9$)-Q8)
+4640 NEXT Q8
+4650 RETURN
+9999 END

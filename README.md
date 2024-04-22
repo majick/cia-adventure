@@ -8,6 +8,8 @@ Back in the extremely early 80s, probably 1980 or 1981, I had a cassette of "CIA
 
 ## What's here?
 
+Runnable game binaries are at the [Releases page](https://github.com/majick/cia-adventure/releases)
+
 The ported source is in: `cia-port.bas`.  As is customary for the modern era, the `.bas` file is source code. 
 
 In `orig/ciaadvn8.txt` is the source from which the port was made. It was detokenized from `orig/variants/tokenized/ciaadvn8.bas`

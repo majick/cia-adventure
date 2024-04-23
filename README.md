@@ -18,4 +18,6 @@ In `orig/variants/tokenized` are the various original versions of the CIA Advent
 
 In `orig/variants/src` are detokenized ("source") versions of the same. They were detokenized using [trs80-tool](https://www.my-trs-80.com/tool/).
 
+`model100/` contains the port to the TRS-80 Model 100 (and Tandy 102), with source and tokenized BASIC provided. I only did cursory testing of my porting work, which mostly consisted of fixing `IF` statements to include `THEN` statements (much like I had to do for the qb64 port) and some stuff for making the ORDERS display fit on the smaller screen.
+
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)

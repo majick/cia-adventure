@@ -1,5 +1,5 @@
 # cia-adventure
-[qb64](https://github.com/QB64Official/qb64) port of Hugh Lampert's CIA Adventure, a 1980 interactive fiction title fort the TRS-80
+[qb64](https://github.com/QB64Official/qb64) port of Hugh Lampert's CIA Adventure, a 1980 interactive fiction title fort the TRS-80, with a bonus port to the TRS-80 Model 100 (and Tandy 102).
 
 ## What is this?
 This is a quick-n-dirty forward port of an "interactive fiction" game (that is, a text adventure) written in 1980 for TRS-80 Level II BASIC (an early Microsoft BASIC) to the modern QB64 compiler. Essentially, I did just enough work to make the syntax errors go away and compilation succeed.

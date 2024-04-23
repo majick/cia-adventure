@@ -1,2 +1,2 @@
 *.DO linguist-language=BASIC
-*.txt linguist-detectable inguist-language=BASIC
+*.txt linguist-detectable linguist-language=BASIC
